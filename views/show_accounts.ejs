@@ -1,0 +1,15 @@
+<h1>거래처 보기</h1>
+
+<% for(var i=0; i<accounts.length; i++){ %>
+<div><%= accounts[i].name %></div>
+<% } %>
+
+<form id="" action="/admin/register_accounts" method="post">
+	<input type="text" name="name" placeholder="name"><br>
+	<input type="text" name="number" placeholder="number"><br>
+	<input type="text" name="email" placeholder="email"><br>
+	<input type="text" name="address" placeholder="address"><br>
+	<input type="text" name="website" placeholder="website">
+	<input type="submit" value="register">
+</form>
+
