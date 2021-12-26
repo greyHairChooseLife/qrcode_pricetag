@@ -21,13 +21,17 @@ const create_accounts = (req, res) => {
 
 	account_info.registered_date = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate();
 
-	accountsModel.register_accounts(account_info);
+	accountsModel.create_accounts(account_info);
 
 	return res.send('new account registered.');
 }
 
 const update_accounts = (req, res) => {
-	return
+	const new_account_info = req.body;
+	const acc_id = req.query.acc_id;
+	accountsModel.update_accounts(new_account_info, acc_id);
+
+	return res.send('updated.');
 }
 const delete_accounts = (req, res) => {
 	const acc_id = req.query.acc_id;

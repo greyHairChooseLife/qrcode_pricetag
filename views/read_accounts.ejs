@@ -2,36 +2,47 @@
 
 <% for(var i=0; i<accounts.length; i++){ %>
 <div>
-	<span class='acc_read'><%= accounts[i].name %></span>
-	<span class='acc_read'><%= accounts[i].registered_date %></span>
-	<span class='acc_read'><%= accounts[i].number %></span>
-	<span class='acc_read'><%= accounts[i].email %></span>
-	<span class='acc_read'><%= accounts[i].address %></span>
-	<span class='acc_read'><%= accounts[i].website %></span>
+	<div class='read_accounts'>
+		<span><%= accounts[i].name %></span>
+		<span><%= accounts[i].registered_date %></span>
+		<span><%= accounts[i].number %></span>
+		<span><%= accounts[i].email %></span>
+		<span><%= accounts[i].address %></span>
+		<span><%= accounts[i].website %></span>
+		<button class="update_btn" type="button">수정</button>
+		<button class="delete_btn" type="button">삭제</button>
+	</div>
 
-	<span class='acc_update'><%= accounts[i].name %></span>
-	<span class='acc_update'><%= accounts[i].registered_date %></span>
-	<span class='acc_update'><%= accounts[i].number %></span>
-	<span class='acc_update'><%= accounts[i].email %></span>
-	<span class='acc_update'><%= accounts[i].address %></span>
-	<span class='acc_update'><%= accounts[i].website %></span>
-
-	<form id="" action="/admin/delete_accounts?acc_id=<%= accounts[i].id %>" method="post">
-		<input type="submit" value="delete">
+	<form class="updating_form" action="/admin/update_accounts?acc_id=<%= accounts[i].id %>" method="post">
+		<span><input type="text" name="name" value='<%= accounts[i].name %>'></span>
+		<span><input type="text" name="number" value='<%= accounts[i].number %>'></span>
+		<span><input type="text" name="email" value='<%= accounts[i].email %>'></span>
+		<span><input type="text" name="address" value='<%= accounts[i].address %>'></span>
+		<span><input type="text" name="website" value='<%= accounts[i].website %>'></span>
+		<button class="apply_btn" type="button">적용</button>
+		<button class="cancel_btn" type="button">취소</button>
 	</form>
+
+	<form class="deleting_form" action="/admin/delete_accounts?acc_id=<%= accounts[i].id %>" method="post"></form>
 </div>
 <% } %>
 
-
-
-
-<form id="" action="/admin/create_accounts" method="post">
-	<input type="text" name="name" placeholder="name"><br>
-	<input type="text" name="number" placeholder="number"><br>
-	<input type="text" name="email" placeholder="email"><br>
-	<input type="text" name="address" placeholder="address"><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<form id="creating_form" action="/admin/create_accounts" method="post">
+	<input type="text" name="name" placeholder="name">
+	<input type="text" name="number" placeholder="number">
+	<input type="text" name="email" placeholder="email">
+	<input type="text" name="address" placeholder="address">
 	<input type="text" name="website" placeholder="website">
-	<input type="submit" value="register">
+	<input type="submit" value="거래처 추가">
 </form>
 
 <script type="text/javascript" src="/js/read_accounts.js"></script>

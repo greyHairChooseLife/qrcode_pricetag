@@ -21,14 +21,14 @@ const read_accounts = async () => {
 	}
 }
 
-const update_accounts = async (new_account_info) => {
+const update_accounts = async (new_account_info, acc_id) => {
 	const name = new_account_info.name;
 	const number = new_account_info.number;
 	const email = new_account_info.email;
 	const address = new_account_info.address;
 	const website = new_account_info.website;
 
-	await db.query(`UPDATE accounts SET name='${name}', number='${number}', email='${email}', address='${address}', website='${website}'`);
+	await db.query(`UPDATE accounts SET name='${name}', number='${number}', email='${email}', address='${address}', website='${website}' WHERE id=?`, [acc_id]);
 	return;
 }
 const delete_accounts = async (account_info) => {
