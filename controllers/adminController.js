@@ -4,6 +4,11 @@ const accountsModel = require('../models/accountsModel.js');
 const read_accounts = async (req, res) => {
 	const accounts = await accountsModel.read_accounts();
 
+	for(var i=0; i<accounts.length; i++){
+		const date = accounts[i].registered_date;
+		accounts[i].registered_date = date.getFullYear() +'-'+ date.getMonth() +'-'+ date.getDate();
+	}
+
 	const obj = {
 		accounts: accounts,
 	}

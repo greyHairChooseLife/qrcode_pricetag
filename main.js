@@ -6,6 +6,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('view engine', 'ejs');
+app.use(express.static('./front'));
 
 const homeRouter = require('./routers/homeRouter.js');
 const adminRouter = require('./routers/adminRouter.js');

@@ -9,6 +9,13 @@
 	<span class='acc_read'><%= accounts[i].address %></span>
 	<span class='acc_read'><%= accounts[i].website %></span>
 
+	<span class='acc_update'><%= accounts[i].name %></span>
+	<span class='acc_update'><%= accounts[i].registered_date %></span>
+	<span class='acc_update'><%= accounts[i].number %></span>
+	<span class='acc_update'><%= accounts[i].email %></span>
+	<span class='acc_update'><%= accounts[i].address %></span>
+	<span class='acc_update'><%= accounts[i].website %></span>
+
 	<form id="" action="/admin/delete_accounts?acc_id=<%= accounts[i].id %>" method="post">
 		<input type="submit" value="delete">
 	</form>
@@ -27,3 +34,5 @@
 	<input type="submit" value="register">
 </form>
 
+<script type="text/javascript" src="/js/read_accounts.js"></script>
+<link rel="stylesheet" href="/css/read_accounts.css">
