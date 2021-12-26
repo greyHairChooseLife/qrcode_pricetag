@@ -1,0 +1,29 @@
+<h1>거래처 보기</h1>
+
+<% for(var i=0; i<accounts.length; i++){ %>
+<div>
+	<span class='acc_read'><%= accounts[i].name %></span>
+	<span class='acc_read'><%= accounts[i].registered_date %></span>
+	<span class='acc_read'><%= accounts[i].number %></span>
+	<span class='acc_read'><%= accounts[i].email %></span>
+	<span class='acc_read'><%= accounts[i].address %></span>
+	<span class='acc_read'><%= accounts[i].website %></span>
+
+	<form id="" action="/admin/delete_accounts?acc_id=<%= accounts[i].id %>" method="post">
+		<input type="submit" value="delete">
+	</form>
+</div>
+<% } %>
+
+
+
+
+<form id="" action="/admin/create_accounts" method="post">
+	<input type="text" name="name" placeholder="name"><br>
+	<input type="text" name="number" placeholder="number"><br>
+	<input type="text" name="email" placeholder="email"><br>
+	<input type="text" name="address" placeholder="address"><br>
+	<input type="text" name="website" placeholder="website">
+	<input type="submit" value="register">
+</form>
+
