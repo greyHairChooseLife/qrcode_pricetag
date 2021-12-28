@@ -1,7 +1,13 @@
 <h1>품목 보기</h1>
 
-<div>메만두 1호</div>
-<div>메만두 2호</div>
-<div>중식팬37</div>
-<div>중식팬42</div>
-
+<% for(var i=0; i<items.length; i++){ %>
+<div class='read_accounts'>
+	<span><%= items[i].code %></span>
+	<span><%= items[i].name %></span>
+	<span><%= items[i].registered_date %></span>
+	<span><%= items[i].purchase_code %></span>
+	<span><%= items[i].price %></span>
+	<span><%= items[i].margin_rate %></span>
+	<span><%= items[i].account_id %></span>
+</div>
+<% } %>
