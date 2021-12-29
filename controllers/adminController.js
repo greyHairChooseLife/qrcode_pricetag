@@ -41,8 +41,8 @@ const delete_accounts = (req, res) => {
 	return res.send('deleted');
 }
 
-const read_items = async (req, res) => {
-	const items = await itemsModel.read_items();
+const read_all_items = async (req, res) => {
+	const items = await itemsModel.read_all_items();
 
 	for(var i=0; i<items.length; i++){
 		const date = items[i].registered_date;
@@ -61,5 +61,5 @@ module.exports = {
 	create_accounts,
 	update_accounts,
 	delete_accounts,
-	read_items,
+	read_all_items,
 }

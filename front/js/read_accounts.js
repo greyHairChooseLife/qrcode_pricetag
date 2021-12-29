@@ -43,3 +43,13 @@ for(var i=0; i<delete_btn.length; i++){
 		});
 	})(i)
 }
+
+const item_upload_btn = document.getElementsByClassName('item_upload_btn');
+const item_upload_form = document.getElementsByClassName('item_upload_form');
+for(var i=0; i<item_upload_btn.length; i++){
+	(function(m){
+		item_upload_btn[m].addEventListener('click', () => {
+			item_upload_form[m].submit();
+		});
+	})(i)
+}
