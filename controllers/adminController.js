@@ -1,4 +1,5 @@
 //const db = require('../config/db.js').promise();
+const fs = require('fs');
 const accountsModel = require('../models/accountsModel.js');
 const itemsModel = require('../models/itemsModel.js');
 
@@ -41,33 +42,36 @@ const delete_accounts = (req, res) => {
 	return res.send('deleted');
 }
 
-const read_all_items = async (req, res) => {
+const read_all_items = async (req, res) => {		//read only
 	const items = await itemsModel.read_all_items();
-
 	for(var i=0; i<items.length; i++){
 		const date = items[i].registered_date;
 		items[i].registered_date = date.getFullYear() +'-'+ date.getMonth() +'-'+ date.getDate();
 	}
-
 	const obj = {
 		items: items,
 	}
-
 	return res.render('read_all_items', obj);
 }
 
 const controll_items = async (req, res) => {
 	const account_id = req.query.acc_id;
 	const account_name = req.query.acc_name;
-	const items = await itemsModel.read_items_by_accounts(account_id);
-
-	const obj = {
-		account_id: account_id,
-		account_name: account_name,
-		items: items,
+	const dir = `./files/${account_name}`;
+	if(!fs.existsSync(dir)){
+		fs.mkdirSync(dir, {recursive: true});
 	}
-
-	return res.render('controll_items_by_accounts', obj);
+	try{
+		const items = await itemsModel.read_items_by_accounts(account_id);
+		const obj = {
+			account_id: account_id,
+			account_name: account_name,
+			items: items,
+		}
+		return res.render('controll_items_by_accounts', obj);
+	}catch(err){
+		console.log(err);
+	}
 }
 
 module.exports = {
