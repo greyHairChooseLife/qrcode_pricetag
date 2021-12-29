@@ -53,7 +53,21 @@ const read_all_items = async (req, res) => {
 		items: items,
 	}
 
-	return res.render('read_items', obj);
+	return res.render('read_all_items', obj);
+}
+
+const controll_items = async (req, res) => {
+	const account_id = req.query.acc_id;
+	const account_name = req.query.acc_name;
+	const items = await itemsModel.read_items_by_accounts(account_id);
+
+	const obj = {
+		account_id: account_id,
+		account_name: account_name,
+		items: items,
+	}
+
+	return res.render('controll_items_by_accounts', obj);
 }
 
 module.exports = {
@@ -61,5 +75,7 @@ module.exports = {
 	create_accounts,
 	update_accounts,
 	delete_accounts,
+
 	read_all_items,
+	controll_items,
 }

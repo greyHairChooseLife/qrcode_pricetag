@@ -2,7 +2,16 @@ const db = require('../config/db.js').promise();
 
 const read_all_items = async () => {
 	const [result] = await db.query(`SELECT code, name, size, registered_date, purchase_cost, account_id FROM items`);
+	//result[0] return undefined when there is no data with those conditions
+	if(result == undefined){
+		return undefined;
+	}else{
+		return result;
+	}
+}
 
+const read_items_by_accounts = async (account_id) => {
+	const [result] = await db.query(`SELECT code, name, size, registered_date, purchase_cost, account_id FROM items WHERE account_id=?`, [account_id]);
 	//result[0] return undefined when there is no data with those conditions
 	if(result == undefined){
 		return undefined;
@@ -31,7 +40,10 @@ const delete_item = async (item_info) => {
 }
 
 module.exports = {
-	read_all_items,		//read
+	read_all_items,		//read all
+
+	read_items_by_accounts,		//read by account_id
+
 	update_item,	//update
 	delete_item,	//delete
 };

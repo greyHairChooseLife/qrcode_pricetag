@@ -8,5 +8,6 @@ router.post('/update_accounts', adminController.update_accounts);
 router.post('/delete_accounts', adminController.delete_accounts);
 
 router.post('/read_all_items', adminController.read_all_items);
+router.post('/controll_items', adminController.controll_items);
 
 module.exports = router;

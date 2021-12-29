@@ -1,0 +1,12 @@
+<h1><%= account_name %></h1>
+
+<% for(var i=0; i<items.length; i++){ %>
+<div class='read_accounts'>
+	<span><%= items[i].code %></span>
+	<span><%= items[i].name %></span>
+	<span><%= items[i].size %></span>
+	<span><%= items[i].registered_date %></span>
+	<span><%= items[i].purchase_code %></span>
+	<span><%= items[i].account_id %></span>
+</div>
+<% } %>
