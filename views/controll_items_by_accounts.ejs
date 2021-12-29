@@ -1,10 +1,12 @@
 <h1><%= account_name %></h1>
 
-<button class="upload_xlsx_btn" type="button">파일 선택</button>
-<form class="upload_xlsx_form" action="/admin/upload_xlsx" method="post"></form>
+<form id="upload_xlsx_form" action="/admin/upload_xlsx?acc_name=<%= account_name %>" enctype="multipart/form-data" method="post">
+	<input type="file" name="uploaded" value="파일 선택">
+</form>
+<button id="upload_xlsx_btn" type="button">확인</button>
 
 <% for(var i=0; i<items.length; i++){ %>
-<div class='read_accounts'>
+<div class='read_items'>
 	<span><%= items[i].code %></span>
 	<span><%= items[i].name %></span>
 	<span><%= items[i].size %></span>
@@ -14,3 +16,4 @@
 </div>
 <% } %>
 
+<script type="text/javascript" src="/js/upload_xlsx.js"></script>
