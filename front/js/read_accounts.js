@@ -44,12 +44,12 @@ for(var i=0; i<delete_btn.length; i++){
 	})(i)
 }
 
-const controll_items_btn = document.getElementsByClassName('controll_items_btn');
-const controll_items_form = document.getElementsByClassName('controll_items_form');
-for(var i=0; i<controll_items_btn.length; i++){
+const control_items_btn = document.getElementsByClassName('control_items_btn');
+const control_items_form = document.getElementsByClassName('control_items_form');
+for(var i=0; i<control_items_btn.length; i++){
 	(function(m){
-		controll_items_btn[m].addEventListener('click', () => {
-			controll_items_form[m].submit();
+		control_items_btn[m].addEventListener('click', () => {
+			control_items_form[m].submit();
 		});
 	})(i)
 }

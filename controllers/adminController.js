@@ -1,7 +1,6 @@
 //const db = require('../config/db.js').promise();
 const fs = require('fs');
 const xlsx = require('xlsx');
-const dir = './files';
 const accountsModel = require('../models/accountsModel.js');
 const itemsModel = require('../models/itemsModel.js');
 
@@ -56,7 +55,7 @@ const read_all_items = async (req, res) => {		//read only
 	return res.render('read_all_items', obj);
 }
 
-const controll_items = async (req, res) => {
+const control_items = async (req, res) => {
 	const account_id = req.query.acc_id;
 	const account_name = req.query.acc_name;
 
@@ -67,22 +66,25 @@ const controll_items = async (req, res) => {
 			account_name: account_name,
 			items: items,
 		}
-		return res.render('controll_items_by_accounts', obj);
+		return res.render('control_items_by_accounts', obj);
 	}catch(err){
 		console.log(err);
 	}
 }
 
-const upload_xlsx = (req, res) => {
+const upload_xlsx = async (req, res) => {
+	const account_id = req.query.acc_id;
 	const account_name = req.query.acc_name;
+
+	const dir = './files';
 	const filename = fs.readdirSync(dir);
 	const excel_file = xlsx.readFile(`./files/${filename}`);
 	const sheet_name = excel_file.SheetNames[0];
 	const first_sheet = excel_file.Sheets[sheet_name];
-	
-	const data = xlsx.utils.sheet_to_json(first_sheet, {defval: ""});
-	console.log(data);
-	// 읽은 내용 뿌려서 페이지에 보여주고 기존 내용과 다른것, 새로운것 색깔로 구분해준다. 그리고 '확인'버튼 눌러서 db에 저장하거나 취소하고 excel파일을 수정하도록 권유한다.
+
+	const new_data = xlsx.utils.sheet_to_json(first_sheet, {defval: ""});
+	const exist_data = await itemsModel.read_items_by_accounts(account_id);
+
 	fs.unlinkSync(`./files/${filename}`);
 	return res.send('ok');
 }
@@ -93,8 +95,8 @@ module.exports = {
 	update_accounts,
 	delete_accounts,
 
-	read_all_items,
+	read_all_items,			//just for admin
 
-	controll_items,
+	control_items,
 	upload_xlsx,
 }

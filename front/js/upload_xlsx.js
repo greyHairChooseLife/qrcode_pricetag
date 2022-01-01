@@ -55,7 +55,13 @@
 //}
 const upload_xlsx_btn = document.getElementById('upload_xlsx_btn');
 const upload_xlsx_form = document.getElementById('upload_xlsx_form');
+const is_selected = document.getElementById('is_selected');
 upload_xlsx_btn.addEventListener('click', () =>{
-	upload_xlsx_form.submit();
-
+	if(is_selected.value == ''){
+		alert('choose file');
+	}else{
+		upload_xlsx_form.submit();
+	}
 })
+
+

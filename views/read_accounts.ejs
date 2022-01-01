@@ -3,7 +3,7 @@
 <% for(var i=0; i<accounts.length; i++){ %>
 <div>
 	<div class='read_accounts'>
-		<button class="controll_items_btn" type="button">상품목록</button>
+		<button class="control_items_btn" type="button">상품목록</button>
 		<span><%= accounts[i].name %></span>
 		<span><%= accounts[i].registered_date %></span>
 		<span><%= accounts[i].number %></span>
@@ -24,7 +24,7 @@
 		<button class="cancel_btn" type="button">취소</button>
 	</form>
 
-	<form class="controll_items_form" action="/admin/controll_items?acc_id=<%= accounts[i].id %>&acc_name=<%= accounts[i].name %>" method="post"></form>
+	<form class="control_items_form" action="/admin/control_items?acc_id=<%= accounts[i].id %>&acc_name=<%= accounts[i].name %>" method="post"></form>
 	<form class="deleting_form" action="/admin/delete_accounts?acc_id=<%= accounts[i].id %>" method="post"></form>
 </div>
 <% } %>

@@ -1,7 +1,7 @@
 <h1><%= account_name %></h1>
 
-<form id="upload_xlsx_form" action="/admin/upload_xlsx?acc_name=<%= account_name %>" enctype="multipart/form-data" method="post">
-	<input type="file" name="uploaded" value="파일 선택">
+<form id="upload_xlsx_form" action="/admin/upload_xlsx?acc_id=<%= account_id %>&acc_name=<%= account_name %>" enctype="multipart/form-data" method="post">
+	<input id='is_selected' type="file" name="uploaded" value="파일 선택">
 </form>
 <button id="upload_xlsx_btn" type="button">확인</button>
 
