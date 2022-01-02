@@ -1,6 +1,7 @@
 <h1><%= account_name %></h1>
 <h3>최근 업데이트: <span id='recent_update'></span></h3>
 
+<div id='items'>
 <% for(var i=0; i<exist_data.length; i++){ %>
 <div class='exist_data'>
 	<span class='code'><%= exist_data[i].code %></span>
@@ -9,13 +10,14 @@
 	<span class='size'><%= exist_data[i].size %></span>
 	<span class='purchase_cost'><%= exist_data[i].purchase_cost %></span>
 	<div>
-		<span class='new_registered_date'></span>
-		<span class='new_name'></span>
-		<span class='new_size'></span>
-		<span class='new_purchase_cost'></span>
+		<span class='update_registered_date'></span>
+		<span class='update_name'></span>
+		<span class='update_size'></span>
+		<span class='update_purchase_cost'></span>
 	</div>
 </div>
 <% } %>
+</div>
 
 <button id="update_btn" type="button">확인</button>
 <button id="cancel_btn" type="button">취소</button>

@@ -135,17 +135,27 @@ const update_xlsx = async (req, res) => {
 	}
 	const exist_data = await itemsModel.read_items_by_accounts(account_id);
 
-	for(var i=0; i<new_data.length; i++){
-		for(var j=0; j<exist_data.length; j++){
-			if(new_data[i].code == exist_data[j].code){
-				const new_item_info = [new_data[i].name, new_data[i].size, new_data[i].purchase_cost];
-				//itemsModel.update_item(new_item_info, new_data[i].code, account_id);
-				const result = await itemsModel.update_item(new_item_info, new_data[i].code, account_id);
-				console.log('i: ', i, '+', result);
-				break;
+	if(exist_data.length > 0){
+		for(var i=0; i<new_data.length; i++){
+			for(var j=0; j<exist_data.length; j++){
+				if(new_data[i].code == exist_data[j].code){
+					const new_item_info = [new_data[i].name, new_data[i].size, new_data[i].purchase_cost];
+					//itemsModel.update_item(new_item_info, new_data[i].code, account_id);
+					await itemsModel.update_item(new_item_info, new_data[i].code, account_id);
+					break;
+				}else if(j == exist_data.length-1 && new_data[i].code != exist_data[j].code){
+					await itemsModel.create_item([new_data[i].code, new_data[i].name, new_data[i].size, new_data[i].purchase_cost, account_id]); 
+				}
 			}
 		}
+	}else{
+		for(var i=0; i<new_data.length; i++){
+			await itemsModel.create_item([new_data[i].code, new_data[i].name, new_data[i].size, new_data[i].purchase_cost, account_id]); 
+		}
+
 	}
+
+
 	res.redirect('/');
 }
 const cancel_update_xlsx = (req, res) => {

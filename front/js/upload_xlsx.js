@@ -5,7 +5,10 @@ arr.sort(function(a,b){
 });
 
 function easy_date_format(date){
-	return new Date(new Date(date) + 3240 * 10000).toISOString().split("T")[0];
+	if(date != undefined)
+		return new Date(new Date(date) + 3240 * 10000).toISOString().split("T")[0];
+	else
+		return '기록 없음';
 }
 
 document.getElementById('recent_update').innerText = easy_date_format(arr[0]);
@@ -14,23 +17,83 @@ document.getElementById('recent_update').innerText = easy_date_format(arr[0]);
 for(var i=0; i<new_data.length; i++){
 	for(var j=0; j<exist_data.length; j++){
 		if(new_data[i].code == exist_data[j].code){
-			//if(new_data[i].registered_date != exist_data[j].registered_date)
 			let is_changed = 0;
 			if(new_data[i].name != exist_data[j].name){
-				document.getElementsByClassName('new_name')[j].innerText = new_data[i].name;
+				document.getElementsByClassName('update_name')[j].innerText = new_data[i].name;
 				is_changed = 1;
 			}
 			if(new_data[i].size != exist_data[j].size){
-				document.getElementsByClassName('new_size')[j].innerText = new_data[i].size;
+				document.getElementsByClassName('update_size')[j].innerText = new_data[i].size;
 				is_changed = 1;
 			}
 			if(new_data[i].purchase_cost != exist_data[j].purchase_cost){
-				document.getElementsByClassName('new_purchase_cost')[j].innerText = new_data[i].purchase_cost;
+				document.getElementsByClassName('update_purchase_cost')[j].innerText = new_data[i].purchase_cost;
 				is_changed = 1;
 			}
 			if(is_changed == 1)
-				document.getElementsByClassName('new_registered_date')[j].innerText = new_data[i].registered_date;
+				document.getElementsByClassName('update_registered_date')[j].innerText = new_data[i].registered_date;
 		}
+	}
+}
+
+//업로드한 파일에 기존에 DB에 없는 상품코드가 있다면 새롭게 추가할 사항으로 보여준다.
+const items_area = document.getElementById('items');
+
+if(exist_data.length > 0){
+	var k=0;
+	for(var i=0; i<new_data.length; i++){
+		for(var j=0; j<exist_data.length; j++){
+			if(new_data[i].code == exist_data[j].code){
+				break;
+			}
+			if(j != exist_data.length-1){
+				continue;
+			}
+			const new_div = document.createElement('div');								//createElement should be generated again and again as they are used with appendchild() or appen()
+			new_div.setAttribute('class', 'new_data');
+			const new_data_class = document.getElementsByClassName('new_data');
+			const new_span_code = document.createElement('span');
+			new_span_code.setAttribute('class', 'code');
+			const new_span_registered_date = document.createElement('span');
+			new_span_registered_date.setAttribute('class', 'registered_date');
+			const new_span_name = document.createElement('span');
+			new_span_name.setAttribute('class', 'name');
+			const new_span_size = document.createElement('span');
+			new_span_size.setAttribute('class', 'size');
+			const new_span_purchase_cost = document.createElement('span');
+			new_span_purchase_cost.setAttribute('class', 'purchase_cost');
+			items_area.append(new_div);
+			new_data_class[k].appendChild(new_span_code).innerText = new_data[i].code;
+			new_data_class[k].appendChild(new_span_registered_date).innerText = '오늘';
+			new_data_class[k].appendChild(new_span_name).innerText = new_data[i].name;
+			new_data_class[k].appendChild(new_span_size).innerText = new_data[i].size;
+			new_data_class[k].appendChild(new_span_purchase_cost).innerText = new_data[i].purchase_cost;
+			k++;
+		}
+	}
+}else{
+	var k=0;
+	for(var i=0; i<new_data.length; i++){
+		const new_div = document.createElement('div');								//createElement should be generated again and again as they are used with appendchild() or appen()
+		new_div.setAttribute('class', 'new_data');
+		const new_data_class = document.getElementsByClassName('new_data');
+		const new_span_code = document.createElement('span');
+		new_span_code.setAttribute('class', 'code');
+		const new_span_registered_date = document.createElement('span');
+		new_span_registered_date.setAttribute('class', 'registered_date');
+		const new_span_name = document.createElement('span');
+		new_span_name.setAttribute('class', 'name');
+		const new_span_size = document.createElement('span');
+		new_span_size.setAttribute('class', 'size');
+		const new_span_purchase_cost = document.createElement('span');
+		new_span_purchase_cost.setAttribute('class', 'purchase_cost');
+		items_area.append(new_div);
+		new_data_class[k].appendChild(new_span_code).innerText = new_data[i].code;
+		new_data_class[k].appendChild(new_span_registered_date).innerText = '오늘';
+		new_data_class[k].appendChild(new_span_name).innerText = new_data[i].name;
+		new_data_class[k].appendChild(new_span_size).innerText = new_data[i].size;
+		new_data_class[k].appendChild(new_span_purchase_cost).innerText = new_data[i].purchase_cost;
+		k++;
 	}
 }
 

@@ -20,10 +20,18 @@ const read_items_by_accounts = async (account_id) => {
 	}
 }
 
-const update_item = async (new_item_info, item_code, acc_id) => {
-	//name, size, pc, date
+const create_item = async (new_item_info) => {
+	//code, name, size, purchase_cost, date, account_id
 	
-	console.log('from model: ', new_item_info, item_code, acc_id);
+	console.log('from creatre_model: ', new_item_info);
+
+	return await db.query(`INSERT INTO items (code, name, size, purchase_cost, registered_date, account_id) VALUES(?, ?, ?, ?, NOW(), ?)`, [new_item_info[0], new_item_info[1], new_item_info[2], new_item_info[3], new_item_info[4]]);
+}
+
+const update_item = async (new_item_info, item_code, acc_id) => {
+	//name, size, purchase_cost, date
+	
+	console.log('from update_model: ', new_item_info, item_code, acc_id);
 
 	return await db.query(`UPDATE items SET name='${new_item_info[0]}', size='${new_item_info[1]}', purchase_cost='${new_item_info[2]}', registered_date=NOW() WHERE account_id=? AND code=?`, [acc_id, item_code]);
 	//return;
@@ -42,6 +50,7 @@ module.exports = {
 
 	read_items_by_accounts,		//read by account_id
 
+	create_item,	//create when there is no matched item code.
 	update_item,	//update
 	delete_item,	//delete
 };
