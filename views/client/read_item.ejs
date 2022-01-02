@@ -1,9 +1,9 @@
 <h1><%= item.name %></h1>
 
 <div id=''>
-	<div><%= item.registered_date %></div>
-	<div><%= item.size %></div>
-	<div><%= item.price %></div>
+	<div class='info' id='registered_date'>등록: <%= item.registered_date %></div>
+	<div class='info' id='size'>규격: <%= item.size %></div>
+	<div class='info' id='price'>가격: <%= item.price %>원</div>
 </div>
 
-<link rel="stylesheet" href="/css/read_accounts.css">
+<link rel="stylesheet" href="/css/read_item_client.css">

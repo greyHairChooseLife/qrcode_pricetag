@@ -1,0 +1,20 @@
+h1{
+	margin-top: 20vh;
+	color: black;
+	text-align: center;
+	font-size: 600%;
+	margin-bottom: 10vh;
+
+}
+
+.info{
+	margin-top: 3vh;
+	font-size: 500%;
+	margin-left: 10vw;
+}
+
+#registered_date{
+}
+#price{
+	color: blue;
+}
