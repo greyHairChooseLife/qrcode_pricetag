@@ -12,7 +12,9 @@
 	<span><%= items[i].name %></span>
 	<span><%= items[i].size %></span>
 	<span><%= items[i].purchase_cost %></span>
-	<button class='generate_qrcode_btn' type='button'>qrcode</button>
+	<span>30%</span>
+	<span><%= items[i].purchase_cost * 1.3 %></span>
+	<button class='generate_qrcode_btn' type='button'>QR코드</button>
 	<button class='client_display_check_btn' type='button'>손님용 화면</button>
 </div>
 <% } %>
