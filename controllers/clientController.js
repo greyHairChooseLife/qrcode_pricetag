@@ -1,8 +1,4 @@
-//const db = require('../config/db.js').promise();
-const fs = require('fs');
-const fs_extra = require('fs-extra');
-const xlsx = require('xlsx');
-const accountsModel = require('../models/accountsModel.js');
+//const accountsModel = require('../models/accountsModel.js');
 const itemsModel = require('../models/itemsModel.js');
 
 const read_accounts = async (req, res) => {
@@ -164,12 +160,20 @@ const cancel_update_xlsx = (req, res) => {
 	res.redirect('/');
 }
 
-const generate_qrcode = (req, res) => {
-	const account_id = req.query.acc_id;
-	const item_code = req.query.item_code;
-	const size = [300, 300];
-	const root_url = `https://chart.googleapis.com/chart?cht=qr&chs=${size[0]}x${size[1]}&chl=localhost:3000/client/read_item/${account_id}/${item_code}`
-	res.redirect(root_url);
+const read_item = async (req, res) => {
+	const account_id = req.params.account_id;
+	const item_code = req.params.item_code;
+
+	const item_info = await itemsModel.read_items_by_item_code(account_id, item_code);
+	item_info.price = item_info.purchase_cost*1.3;
+
+	console.log(item_info);
+
+	const obj = {
+		item: item_info,
+	}
+	return res.render('client/read_item', obj);
+
 }
 
 module.exports = {
@@ -185,5 +189,5 @@ module.exports = {
 	update_xlsx,			//apply difference(addition, change)
 	cancel_update_xlsx,		//just cancel erasing file in directory
 
-	generate_qrcode,
+	read_item,
 }

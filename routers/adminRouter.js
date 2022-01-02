@@ -16,4 +16,6 @@ router.post('/upload_xlsx', upload.single('uploaded'), adminController.upload_xl
 router.post('/update_xlsx', adminController.update_xlsx);
 router.post('/cancel_update_xlsx', adminController.cancel_update_xlsx);
 
+router.post('/generate_qrcode', adminController.generate_qrcode);
+
 module.exports = router;

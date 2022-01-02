@@ -12,7 +12,17 @@
 	<span><%= items[i].name %></span>
 	<span><%= items[i].size %></span>
 	<span><%= items[i].purchase_cost %></span>
+	<button class='generate_qrcode_btn' type='button'>qrcode</button>
+	<button class='client_display_check_btn' type='button'>손님용 화면</button>
 </div>
 <% } %>
 
+<form id="generate_qrcode_form" action="" method="post"></form>
+<form id="client_display_check_form" action="" method="get"></form>
+
+
+<script>
+	const account_id = <%= account_id %>;
+	const items = <%- JSON.stringify(items) %>;
+</script>
 <script type="text/javascript" src="/js/control_items_by_accounts.js"></script>
