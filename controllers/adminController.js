@@ -168,7 +168,7 @@ const generate_qrcode = (req, res) => {
 	const account_id = req.query.acc_id;
 	const item_code = req.query.item_code;
 	const size = [300, 300];
-	const root_url = `https://chart.googleapis.com/chart?cht=qr&chs=${size[0]}x${size[1]}&chl=localhost:3000/client/read_item/${account_id}/${item_code}`
+	const root_url = `https://chart.googleapis.com/chart?cht=qr&chs=${size[0]}x${size[1]}&chl=http://3.36.72.138/client/read_item/${account_id}/${item_code}`
 	res.redirect(root_url);
 }
 
