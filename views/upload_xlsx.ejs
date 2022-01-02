@@ -1,0 +1,31 @@
+<h1><%= account_name %></h1>
+<h3>최근 업데이트: <span id='recent_update'></span></h3>
+
+<% for(var i=0; i<exist_data.length; i++){ %>
+<div class='exist_data'>
+	<span class='code'><%= exist_data[i].code %></span>
+	<span class='registered_date'><%= exist_data[i].registered_date %></span>
+	<span class='name'><%= exist_data[i].name %></span>
+	<span class='size'><%= exist_data[i].size %></span>
+	<span class='purchase_cost'><%= exist_data[i].purchase_cost %></span>
+	<div>
+		<span class='new_registered_date'></span>
+		<span class='new_name'></span>
+		<span class='new_size'></span>
+		<span class='new_purchase_cost'></span>
+	</div>
+</div>
+<% } %>
+
+<button id="update_btn" type="button">확인</button>
+<button id="cancel_btn" type="button">취소</button>
+
+<form id="update_form" action="/admin/update_xlsx?acc_id=<%= account_id %>" method="post"></form>
+<form id="cancel_update_form" action="/admin/cancel_update_xlsx?acc_id=<%= account_id %>&acc_name=<%= account_name %>" method="post"></form>
+
+<script>
+	const exist_data = <%- JSON.stringify(exist_data) %>;
+	const new_data = <%- JSON.stringify(new_data) %>;
+</script>
+
+<script type="text/javascript" src="/js/upload_xlsx.js"></script>

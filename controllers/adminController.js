@@ -1,5 +1,6 @@
 //const db = require('../config/db.js').promise();
 const fs = require('fs');
+const fs_extra = require('fs-extra');
 const xlsx = require('xlsx');
 const accountsModel = require('../models/accountsModel.js');
 const itemsModel = require('../models/itemsModel.js');
@@ -83,10 +84,73 @@ const upload_xlsx = async (req, res) => {
 	const first_sheet = excel_file.Sheets[sheet_name];
 
 	const new_data = xlsx.utils.sheet_to_json(first_sheet, {defval: ""});
+	for(var i=0; i<new_data.length; i++){		//reset object key name.
+		new_data[i].code = new_data[i]['상품코드'];
+		new_data[i].name = new_data[i]['상품명'];
+		new_data[i].size = new_data[i]['규격'];
+		new_data[i].purchase_cost = new_data[i]['매입원가'];
+		new_data[i].registered_date = '오늘';
+		delete new_data[i]['상품코드'];
+		delete new_data[i]['상품명'];
+		delete new_data[i]['규격'];
+		delete new_data[i]['매입원가'];
+	}
+	const exist_data = await itemsModel.read_items_by_accounts(account_id);
+	for(var i=0; i<exist_data.length; i++){
+		exist_data[i].registered_date = new Date(new Date(exist_data[i].registered_date) + 3240 * 10000).toISOString().split("T")[0];
+		if(exist_data[i].size == null) 
+			exist_data[i].size = '';
+	}
+
+	const obj = {
+		account_id: account_id,
+		account_name: account_name,
+		new_data: new_data,
+		exist_data: exist_data,
+	}
+
+	return res.render('upload_xlsx', obj);
+}
+
+const update_xlsx = async (req, res) => {
+	const account_id = req.query.acc_id;
+	const dir = './files';
+	const filename = fs.readdirSync(dir);
+	const excel_file = xlsx.readFile(`./files/${filename}`);
+	const sheet_name = excel_file.SheetNames[0];
+	const first_sheet = excel_file.Sheets[sheet_name];
+
+	const new_data = xlsx.utils.sheet_to_json(first_sheet, {defval: ""});
+	fs_extra.emptydirSync(`./files`);		//delete from directory. no need to keep it.
+	for(var i=0; i<new_data.length; i++){		//reset object key name.
+		new_data[i].code = new_data[i]['상품코드'];
+		new_data[i].name = new_data[i]['상품명'];
+		new_data[i].size = new_data[i]['규격'];
+		new_data[i].purchase_cost = new_data[i]['매입원가'];
+		new_data[i].registered_date = '오늘';
+		delete new_data[i]['상품코드'];
+		delete new_data[i]['상품명'];
+		delete new_data[i]['규격'];
+		delete new_data[i]['매입원가'];
+	}
 	const exist_data = await itemsModel.read_items_by_accounts(account_id);
 
-	fs.unlinkSync(`./files/${filename}`);
-	return res.send('ok');
+	for(var i=0; i<new_data.length; i++){
+		for(var j=0; j<exist_data.length; j++){
+			if(new_data[i].code == exist_data[j].code){
+				const new_item_info = [new_data[i].name, new_data[i].size, new_data[i].purchase_cost];
+				//itemsModel.update_item(new_item_info, new_data[i].code, account_id);
+				const result = await itemsModel.update_item(new_item_info, new_data[i].code, account_id);
+				console.log('i: ', i, '+', result);
+				break;
+			}
+		}
+	}
+	res.redirect('/');
+}
+const cancel_update_xlsx = (req, res) => {
+	fs_extra.emptydirSync(`./files`);		//delete from directory. no need to keep it.
+	res.redirect('/');
 }
 
 module.exports = {
@@ -99,4 +163,6 @@ module.exports = {
 
 	control_items,
 	upload_xlsx,
+	update_xlsx,
+	cancel_update_xlsx,
 }

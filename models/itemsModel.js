@@ -20,15 +20,13 @@ const read_items_by_accounts = async (account_id) => {
 	}
 }
 
-const update_item = async (new_item_info, acc_id) => {
-//	const name = new_account_info.name;
-//	const number = new_account_info.number;
-//	const email = new_account_info.email;
-//	const address = new_account_info.address;
-//	const website = new_account_info.website;
-//
-//	await db.query(`UPDATE items SET name='${name}', number='${number}', email='${email}', address='${address}', website='${website}' WHERE id=?`, [acc_id]);
-	return;
+const update_item = async (new_item_info, item_code, acc_id) => {
+	//name, size, pc, date
+	
+	console.log('from model: ', new_item_info, item_code, acc_id);
+
+	return await db.query(`UPDATE items SET name='${new_item_info[0]}', size='${new_item_info[1]}', purchase_cost='${new_item_info[2]}', registered_date=NOW() WHERE account_id=? AND code=?`, [acc_id, item_code]);
+	//return;
 }
 
 const delete_item = async (item_info) => {

@@ -8,12 +8,11 @@
 <% for(var i=0; i<items.length; i++){ %>
 <div class='read_items'>
 	<span><%= items[i].code %></span>
+	<span><%= items[i].registered_date %></span>
 	<span><%= items[i].name %></span>
 	<span><%= items[i].size %></span>
-	<span><%= items[i].registered_date %></span>
-	<span><%= items[i].purchase_code %></span>
-	<span><%= items[i].account_id %></span>
+	<span><%= items[i].purchase_cost %></span>
 </div>
 <% } %>
 
-<script type="text/javascript" src="/js/upload_xlsx.js"></script>
+<script type="text/javascript" src="/js/control_items_by_accounts.js"></script>

@@ -1,67 +1,49 @@
-//const read_accounts = document.getElementsByClassName('read_accounts');
-//const updating_form = document.getElementsByClassName('updating_form');
-//
-//for(var i=0; i<updating_form.length; i++){
-//	updating_form[i].style.display = 'none';
-//}
-//
-//const update_btn = document.getElementsByClassName('update_btn');
-//for(var i=0; i<update_btn.length; i++){
-//	(function(m){
-//		update_btn[m].addEventListener('click', () => {
-//			updating_form[m].style.display = 'block';
-//			read_accounts[m].style.display = 'none';
-//		});
-//	})(i)
-//}
-//
-//const cancel_btn = document.getElementsByClassName('cancel_btn');
-//for(var i=0; i<cancel_btn.length; i++){
-//	(function(m){
-//		cancel_btn[m].addEventListener('click', () => {
-//			updating_form[m].style.display = 'none';
-//			read_accounts[m].style.display = 'block';
-//		});
-//	})(i)
-//}
-//
-//const apply_btn = document.getElementsByClassName('apply_btn');
-//for(var i=0; i<apply_btn.length; i++){
-//	(function(m){
-//		apply_btn[m].addEventListener('click', () => {
-//			updating_form[m].submit();
-//		});
-//	})(i)
-//}
-//
-//const delete_btn = document.getElementsByClassName('delete_btn');
-//const deleting_form = document.getElementsByClassName('deleting_form');
-//for(var i=0; i<delete_btn.length; i++){
-//	(function(m){
-//		delete_btn[m].addEventListener('click', () => {
-//			deleting_form[m].submit();
-//		});
-//	})(i)
-//}
-//
-//const controll_items_btn = document.getElementsByClassName('controll_items_btn');
-//const controll_items_form = document.getElementsByClassName('controll_items_form');
-//for(var i=0; i<controll_items_btn.length; i++){
-//	(function(m){
-//		controll_items_btn[m].addEventListener('click', () => {
-//			controll_items_form[m].submit();
-//		});
-//	})(i)
-//}
-const upload_xlsx_btn = document.getElementById('upload_xlsx_btn');
-const upload_xlsx_form = document.getElementById('upload_xlsx_form');
-const is_selected = document.getElementById('is_selected');
-upload_xlsx_btn.addEventListener('click', () =>{
-	if(is_selected.value == ''){
-		alert('choose file');
-	}else{
-		upload_xlsx_form.submit();
+let arr = [];
+exist_data.forEach(e => arr.push(e.registered_date));
+arr.sort(function(a,b){
+	return new Date(b) - new Date(a);
+});
+
+function easy_date_format(date){
+	return new Date(new Date(date) + 3240 * 10000).toISOString().split("T")[0];
+}
+
+document.getElementById('recent_update').innerText = easy_date_format(arr[0]);
+
+//업로드한 파일의 상품 코드가 기존 DB의 코드와 일치할 경우, 변경된 항목에 한해서 바뀐 내용을 보여준다.
+for(var i=0; i<new_data.length; i++){
+	for(var j=0; j<exist_data.length; j++){
+		if(new_data[i].code == exist_data[j].code){
+			//if(new_data[i].registered_date != exist_data[j].registered_date)
+			let is_changed = 0;
+			if(new_data[i].name != exist_data[j].name){
+				document.getElementsByClassName('new_name')[j].innerText = new_data[i].name;
+				is_changed = 1;
+			}
+			if(new_data[i].size != exist_data[j].size){
+				document.getElementsByClassName('new_size')[j].innerText = new_data[i].size;
+				is_changed = 1;
+			}
+			if(new_data[i].purchase_cost != exist_data[j].purchase_cost){
+				document.getElementsByClassName('new_purchase_cost')[j].innerText = new_data[i].purchase_cost;
+				is_changed = 1;
+			}
+			if(is_changed == 1)
+				document.getElementsByClassName('new_registered_date')[j].innerText = new_data[i].registered_date;
+		}
 	}
+}
+
+const update_btn = document.getElementById('update_btn');
+const update_form = document.getElementById('update_form');
+
+update_btn.addEventListener('click', () => {
+	update_form.submit();
 })
 
+const cancel_btn = document.getElementById('cancel_btn');
+const cancel_update_form = document.getElementById('cancel_update_form');
 
+cancel_btn.addEventListener('click', () => {
+	cancel_update_form.submit();
+})

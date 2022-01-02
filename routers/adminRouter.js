@@ -13,5 +13,7 @@ router.post('/read_all_items', adminController.read_all_items);
 
 router.post('/control_items', adminController.control_items);
 router.post('/upload_xlsx', upload.single('uploaded'), adminController.upload_xlsx);
+router.post('/update_xlsx', adminController.update_xlsx);
+router.post('/cancel_update_xlsx', adminController.cancel_update_xlsx);
 
 module.exports = router;
